@@ -1,0 +1,447 @@
+{
+	"info": {
+		"_postman_id": "623661d0-41a4-4897-ab25-31fee065a9c1",
+		"name": "Покемоны",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "27015184"
+	},
+	"item": [
+		{
+			"name": "Cоздание покемона с геренацией случайного имени",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"pm.collectionVariables.set(\"$randomFirstName\", \"name\");\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "trainer_token",
+						"value": "5d91fda5be0cd7abac970ae9dd1442db",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"{{$randomFullName}}\",\r\n    \"photo\":\"https://dolnikov.ru/pokemons/albums/036.png\"\r\n    }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://{{host}}/pokemons",
+					"protocol": "https",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"pokemons"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Положить покемона в покебол",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "trainer_token",
+						"value": "5d91fda5be0cd7abac970ae9dd1442db",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"pokemon_id\": \"9567\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://{{host}}//trainers/add_pokeball",
+					"protocol": "https",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"",
+						"trainers",
+						"add_pokeball"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Узнать, каких покемонов можно вызвать на бой",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "trainer_token",
+						"value": "5d91fda5be0cd7abac970ae9dd1442db",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://{{host}}/pokemons?in_pokeball=1",
+					"protocol": "https",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"",
+						"pokemons"
+					],
+					"query": [
+						{
+							"key": "in_pokeball",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Вызов покемона на битву",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "trainer_token",
+						"value": "5d91fda5be0cd7abac970ae9dd1442db",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"attacking_pokemon\": \"9596\",\r\n    \"defending_pokemon\": \"9551\"\r\n}"
+				},
+				"url": {
+					"raw": "https://{{host}}/battle",
+					"protocol": "https",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"battle"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Все покемоны тренера",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "trainer_token",
+						"value": "5d91fda5be0cd7abac970ae9dd1442db",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://{{host}}/pokemons?trainer_id=4133",
+					"protocol": "https",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"pokemons"
+					],
+					"query": [
+						{
+							"key": "trainer_id",
+							"value": "4133"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Получение ошибки 500",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://{{host}}/debug_sentry",
+					"protocol": "https",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"debug_sentry"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Cоздать покемона и положить его в покебол",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"pm.sendRequest({\r",
+							"    url: 'https://pokemonbattle.me:9104/pokemons',\r",
+							"    method: 'POST',\r",
+							"    header: {\r",
+							"        \"trainer_token\":\"5d91fda5be0cd7abac970ae9dd1442db\",\r",
+							"        \"Content-Type\": \"application/json\"\r",
+							"    },\r",
+							"    body: {\r",
+							"        mode: 'raw',\r",
+							"        raw: JSON.stringify({ \r",
+							"            \"name\": \"Вульпикс\",\r",
+							"            \"photo\": \"https://dolnikov.ru/pokemons/albums/037.png\"\r",
+							"         })\r",
+							"    }\r",
+							"}, function (error, response) {\r",
+							"    console.log(response);\r",
+							"    console.log(response.json());\r",
+							"    var pokemon_id = response.json();\r",
+							"    pm.collectionVariables.set(\"pokemon_id\", pokemon_id.id);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "trainer_token",
+						"value": "5d91fda5be0cd7abac970ae9dd1442db",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"pokemon_id\": {{pokemon_id}}\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://pokemonbattle.me:9104//trainers/add_pokeball",
+					"protocol": "https",
+					"host": [
+						"pokemonbattle",
+						"me"
+					],
+					"port": "9104",
+					"path": [
+						"",
+						"trainers",
+						"add_pokeball"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Создание покемона без имени",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Body matches string\", function () {\r",
+							"    pm.expect(pm.response.text()).to.include(\"Вульпикс\");\r",
+							"});\r",
+							"pm.test(\"Body is correct\", function () {\r",
+							"    pm.response.to.have.body(\"response_body_string\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "trainer_token",
+						"value": "5d91fda5be0cd7abac970ae9dd1442db",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\":\"\"\r\n    \"photo\":\"https://dolnikov.ru/pokemons/albums/036.png\"\r\n    }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://{{host}}/pokemons",
+					"protocol": "https",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"pokemons"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Регистрация",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"trainer_token\": \"f68c771579fdf2629f8c114fb618ea2d\",\r\n    \"email\": \"karina1galieva@yandex.ru\",\r\n    \"password\": \"270233Vm\"\r\n}"
+				},
+				"url": {
+					"raw": "https://{{host}}//trainers/reg",
+					"protocol": "https",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"",
+						"trainers",
+						"reg"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Сброс пароля",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://pokemonbattle.me?password_re=3f5d84723658bf659e450280a8d5b0d7",
+					"protocol": "https",
+					"host": [
+						"pokemonbattle",
+						"me"
+					],
+					"query": [
+						{
+							"key": "password_re",
+							"value": "3f5d84723658bf659e450280a8d5b0d7"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "host",
+			"value": "pokemonbattle.me:9104",
+			"type": "string"
+		},
+		{
+			"key": "pokemon_id",
+			"value": ""
+		},
+		{
+			"key": "$randomFirstName",
+			"value": ""
+		}
+	]
+}
